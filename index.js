@@ -18,8 +18,6 @@ const isFilter = node => node.filters && node.filters.length;
 
 // The loader
 module.exports = function(content) {
-  this.cacheable && this.cacheable();
-
   const options = loaderUtils.getOptions(this);
 
   // Assume a root will be passed in, but fall back to cwd/views to mirror
