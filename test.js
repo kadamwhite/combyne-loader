@@ -24,45 +24,56 @@ describe('base spec', () => {
     expect(combyneLoader).toBeInstanceOf(Function);
   });
 
-  it('parses the template without error', () => {
-    const result = combyneLoader.apply({
+  it('exports a module definition string', () => {
+    const result = combyneLoader.apply(Object.freeze({
       resourcePath: __dirname + 'sample.tmpl',
       query: {
         filtersDir: __dirname,
         root: __dirname,
       },
-    }, [template]);
+    }), [template]);
     expect(result.substr(0, 17)).toEqual('module.exports = ');
   });
 
+  it('correctly generates a template object', () => {
+    const result = combyneLoader.apply(Object.freeze({
+      resourcePath: __dirname + 'sample.tmpl',
+      query: {
+        filtersDir: __dirname,
+        root: __dirname,
+      },
+    }), [template]);
+    expect(result.substr(17)).not.toEqual('undefined');
+  });
+
   it('adds require calls for filters', () => {
-    const result = combyneLoader.apply({
+    const result = combyneLoader.apply(Object.freeze({
       resourcePath: 'sample.tmpl',
       query: {
         root: __dirname,
       },
-    }, [template]);
+    }), [template]);
     expect(/require\("[^"]+filters\/last"/.test(result)).toBe(true);
     expect(/require\("[^"]+filters\/get"/.test(result)).toBe(true);
   });
 
   it('infers extension for extensionless partials from resourcePath', () => {
-    const result = combyneLoader.apply({
+    const result = combyneLoader.apply(Object.freeze({
       resourcePath: 'sample.combyne',
       query: {
         root: __dirname,
       },
-    }, [template]);
+    }), [template]);
     expect(/require\("[^"]+nested.combyne"/.test(result)).toBe(true);
   });
 
   it('does not override extensions for partials which already have them', () => {
-    const result = combyneLoader.apply({
+    const result = combyneLoader.apply(Object.freeze({
       resourcePath: 'sample.combyne',
       query: {
         root: __dirname,
       },
-    }, [template]);
+    }), [template]);
     expect(/require\("[^"]+tmpl\.tmpl"/.test(result)).toBe(true);
   });
 });

@@ -90,7 +90,5 @@ module.exports = function(content) {
   // Remove unnecessary whitespace and reinstate line breaks
   template.source = lines.map(str => str.trim()).join('\n');
 
-  // console.log(template.source);
-
   return `module.exports = ${ template.source }`;
 };
