@@ -1,0 +1,40 @@
+{
+  "name": "combyne-loader",
+  "version": "0.1.0",
+  "description": "A Webpack loader for Combyne templates",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./*.js",
+    "test": "jest test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kadamwhite/combyne-loader.git"
+  },
+  "keywords": [
+    "templating",
+    "webpack",
+    "loader",
+    "combyne"
+  ],
+  "author": "K Adam White",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kadamwhite/combyne-loader/issues"
+  },
+  "homepage": "https://github.com/kadamwhite/combyne-loader#readme",
+  "engines": {
+    "node": ">=6.4.0"
+  },
+  "peerDependencies": {
+    "combyne": "^2.0.0"
+  },
+  "devDependencies": {
+    "combyne": "^2.0.0",
+    "eslint": "^4.2.0",
+    "eslint-plugin-jest": "^20.0.3",
+    "html-minifier": "^3.5.2",
+    "jest": "^20.0.4",
+    "loader-utils": "^1.1.0"
+  }
+}

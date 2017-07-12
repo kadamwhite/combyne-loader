@@ -1,0 +1,10 @@
+<li>
+  <ul class="branches row">
+    {%each branches as branch %}
+    <li class="branch six columns">
+      <em>To {{ branch | last | get 'name' }}</em>
+      <ul></ul>
+    </li>
+    {%endeach %}
+  </ul>
+</li>
