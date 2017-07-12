@@ -92,6 +92,5 @@ module.exports = function(content) {
 
   // console.log(template.source);
 
-  this.value = template.source;
-  return `module.exports = ${ this.value }`;
+  return `module.exports = ${ template.source }`;
 };
