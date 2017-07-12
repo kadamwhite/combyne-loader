@@ -28,7 +28,7 @@ module.exports = function(content) {
 
   // We cannot easily guess where filters will be, so we assume the filters
   // directory is specified explicitly or else located at root/filters
-  const filtersDir = getOption(options, 'filtersDir', 'filters');
+  const filtersDir = getOption(options, 'filtersDir', join(root, 'filters'));
 
   // Detect the filename extension, and assume it for all subsequent template
   // requires that do not explicitly specify their own extension
@@ -36,7 +36,7 @@ module.exports = function(content) {
 
   // Apply this file's extension to a fileName if it lacks an extension
   const ensureExtension = fileName => /.\..+$/.test(fileName) ?
-    fileName : `${fileName}${extension}`;
+    fileName : `${ fileName }${ extension }`;
 
   // Compile the template to build the AST
   const template = combyne(content);
@@ -92,6 +92,8 @@ module.exports = function(content) {
   // Remove unnecessary whitespace and reinstate line breaks
   template.source = lines.map(str => str.trim()).join('\n');
 
+  // console.log(template.source);
+
   this.value = template.source;
-  return `module.exports = ${this.value}`;
+  return `module.exports = ${ this.value }`;
 };

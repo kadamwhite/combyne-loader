@@ -42,8 +42,8 @@ describe('base spec', () => {
         root: __dirname,
       },
     }, [template]);
-    expect(/require\("filters\/last"/.test(result)).toBe(true);
-    expect(/require\("filters\/get"/.test(result)).toBe(true);
+    expect(/require\("[^"]+filters\/last"/.test(result)).toBe(true);
+    expect(/require\("[^"]+filters\/get"/.test(result)).toBe(true);
   });
 
   it('infers extension for extensionless partials from resourcePath', () => {
