@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const combyneLoader = require('./');
+
 describe('base spec', () => {
   let template;
 
@@ -16,5 +18,51 @@ describe('base spec', () => {
     expect(template.length).toBeGreaterThan(0);
   });
 
-  it('correctly loads the template');
+  it('exports a function', () => {
+    expect(combyneLoader).toBeDefined();
+    expect(typeof combyneLoader).toEqual('function');
+    expect(combyneLoader).toBeInstanceOf(Function);
+  });
+
+  it('parses the template without error', () => {
+    const result = combyneLoader.apply({
+      resourcePath: __dirname + 'sample.tmpl',
+      query: {
+        filtersDir: __dirname,
+        root: __dirname,
+      },
+    }, [template]);
+    expect(result.substr(0, 17)).toEqual('module.exports = ');
+  });
+
+  it('adds require calls for filters', () => {
+    const result = combyneLoader.apply({
+      resourcePath: 'sample.tmpl',
+      query: {
+        root: __dirname,
+      },
+    }, [template]);
+    expect(/require\("filters\/last"/.test(result)).toBe(true);
+    expect(/require\("filters\/get"/.test(result)).toBe(true);
+  });
+
+  it('infers extension for extensionless partials from resourcePath', () => {
+    const result = combyneLoader.apply({
+      resourcePath: 'sample.combyne',
+      query: {
+        root: __dirname,
+      },
+    }, [template]);
+    expect(/require\("[^"]+nested.combyne"/.test(result)).toBe(true);
+  });
+
+  it('does not override extensions for partials which already have them', () => {
+    const result = combyneLoader.apply({
+      resourcePath: 'sample.combyne',
+      query: {
+        root: __dirname,
+      },
+    }, [template]);
+    expect(/require\("[^"]+tmpl\.tmpl"/.test(result)).toBe(true);
+  });
 });
